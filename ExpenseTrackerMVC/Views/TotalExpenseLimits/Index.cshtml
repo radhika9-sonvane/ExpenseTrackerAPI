@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ExpenseTrackerMVC.Models.mvcTotalExpenseLimits>
+
+
+<p>
+    <a href="@Url.Action("AddorEdit","TotalExpenseLimits")" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i>Create new</a>
+</p>
+<table class="table table-striped">
+    <thead class="table-heading">
+        <tr>
+            <th>
+                TotalExpenseLimit
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.totalexpenselimit1)
+            </td>
+            <td>
+                <a href="@Url.Action("AddorEdit", "TotalExpenseLimits", new {id=item.totalexpenseid})" class="btn btn-default"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</a>
+
+                <a onClick="Delete(@item.totalexpenseid)" class="btn btn-default"><i class="fa fa-trash-o" aria-hidden="true"></i>Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage)
+        });
+        function Delete(id)
+        {
+            alertify.confirm('Total Expense Limit', 'Are you sure to delete this record', function () {
+                window.location.href='@Url.Action("Delete", "TotalExpenseLimits")/' + id;
+            }, null
+            );
+        }
+    </script>
+}

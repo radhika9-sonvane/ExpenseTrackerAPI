@@ -1,0 +1,61 @@
+﻿@model ExpenseTrackerMVC.Models.mvcExpenseDetails
+@{
+    ViewBag.Title = "AddorEdit";
+}
+<div class="form-body">
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(model => model.expenseid)
+        <div class="form-group">
+            Title
+            @Html.EditorFor(model => model.title)
+            @Html.ValidationMessageFor(model => model.title)
+        </div>
+        <div class="form-group">
+            Description
+            @Html.EditorFor(model => model.description)
+            @Html.ValidationMessageFor(model => model.description)
+        </div>
+        <div class="form-group">
+            Date
+            @Html.EditorFor(model => model.date, new { htmlAttributes = new { @class = "datepicker" } })
+            @Html.ValidationMessageFor(model => model.date)
+            
+        </div>
+        <div class="form-group">
+            Amount
+            @Html.EditorFor(model => model.amount)
+            @Html.ValidationMessageFor(model => model.amount)
+        </div>
+        <div class="form-group">
+            Category
+            <br /><br />
+            <select name="categoryid">
+                @{
+                    <option value="">Select Category</option>
+                    foreach (var item in ViewBag.category)
+                    {
+                        <option value="@item.categoryid">@item.name</option>
+                    }
+                }
+            </select>
+
+            @Html.ValidationMessageFor(model => model.categoryid, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn button" />
+            <input type="reset" value="Reset" class="btn button" />
+        </div>
+    }
+</div>
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+@section scripts{
+
+    <script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+        </script>
+    }

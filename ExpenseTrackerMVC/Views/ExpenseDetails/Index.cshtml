@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ExpenseTrackerMVC.Models.ExpenseClass>
+
+
+<p>
+    <a href="@Url.Action("AddorEdit","ExpenseDetails")" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i>Create new</a>
+</p>
+<table class="table table-striped">
+    <thead class="table-heading">
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Amount
+            </th>
+            <th>
+                Category
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                <a href="@Url.Action("AddorEdit", "ExpenseDetails", new {id=item.expenseid})" class="btn btn-default"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</a>
+
+                <a onClick="Delete(@item.expenseid)" class="btn btn-default"><i class="fa fa-trash-o" aria-hidden="true"></i>Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage)
+        });
+        function Delete(id)
+        {
+            alertify.confirm('Expense Details', 'Are you sure to delete this record', function () {
+                window.location.href='@Url.Action("Delete", "ExpenseDetails")/' + id;
+            }, null
+            );
+        }
+    </script>
+}

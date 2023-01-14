@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ExpenseTrackerMVC.Models.mvcCategories>
+
+
+<p>
+    <a href="@Url.Action("AddorEdit","Categories")" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i>Create new</a>
+</p>
+<table class="table table-striped">
+    <thead class="table-heading">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                ExpenseLimit
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.expenselimit)
+            </td>
+            <td>
+                <a href="@Url.Action("AddorEdit", "Categories", new {id=item.categoryid})" class="btn btn-default"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</a>
+
+                <a onClick="Delete(@item.categoryid)" class="btn btn-default"><i class="fa fa-trash-o" aria-hidden="true"></i>Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage)
+        });
+        function Delete(id)
+        {
+            alertify.confirm('Expense Category', 'Are you sure to delete this record', function () {
+                window.location.href='@Url.Action("Delete", "Categories")/' + id;
+            }, null
+            );
+        }
+    </script>
+}

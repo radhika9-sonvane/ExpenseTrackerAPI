@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ExpenseTrackerDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="categoryid" />
+          </Key>
+          <Property Name="categoryid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="expenselimit" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExpenseDetails">
+          <Key>
+            <PropertyRef Name="expenseid" />
+          </Key>
+          <Property Name="expenseid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="amount" Type="int" Nullable="false" />
+          <Property Name="categoryid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TotalExpenseLimit">
+          <Key>
+            <PropertyRef Name="totalexpenseid" />
+          </Key>
+          <Property Name="totalexpenseid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="totalexpenselimit" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ExpenseDetails_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="ExpenseDetails" Type="Self.ExpenseDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="categoryid" />
+            </Principal>
+            <Dependent Role="ExpenseDetails">
+              <PropertyRef Name="categoryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ExpenseTrackerDBModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExpenseDetails" EntityType="Self.ExpenseDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TotalExpenseLimit" EntityType="Self.TotalExpenseLimit" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ExpenseDetails_Category" Association="Self.FK_ExpenseDetails_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="ExpenseDetails" EntitySet="ExpenseDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ExpenseTrackerDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="categoryid" />
+          </Key>
+          <Property Name="categoryid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="expenselimit" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ExpenseDetails" Relationship="Self.FK_ExpenseDetails_Category" FromRole="Category" ToRole="ExpenseDetails" />
+        </EntityType>
+        <EntityType Name="ExpenseDetail">
+          <Key>
+            <PropertyRef Name="expenseid" />
+          </Key>
+          <Property Name="expenseid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="amount" Type="Int32" Nullable="false" />
+          <Property Name="categoryid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_ExpenseDetails_Category" FromRole="ExpenseDetails" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="TotalExpenseLimit">
+          <Key>
+            <PropertyRef Name="totalexpenseid" />
+          </Key>
+          <Property Name="totalexpenseid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="totalexpenselimit1" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ExpenseDetails_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="ExpenseDetails" Type="Self.ExpenseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="categoryid" />
+            </Principal>
+            <Dependent Role="ExpenseDetails">
+              <PropertyRef Name="categoryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ExpenseTrackerDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="ExpenseDetails" EntityType="Self.ExpenseDetail" />
+          <EntitySet Name="TotalExpenseLimits" EntityType="Self.TotalExpenseLimit" />
+          <AssociationSet Name="FK_ExpenseDetails_Category" Association="Self.FK_ExpenseDetails_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="ExpenseDetails" EntitySet="ExpenseDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ExpenseTrackerDBModelStoreContainer" CdmEntityContainer="ExpenseTrackerDBEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="ExpenseTrackerDBModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="categoryid" ColumnName="categoryid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="expenselimit" ColumnName="expenselimit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExpenseDetails">
+            <EntityTypeMapping TypeName="ExpenseTrackerDBModel.ExpenseDetail">
+              <MappingFragment StoreEntitySet="ExpenseDetails">
+                <ScalarProperty Name="expenseid" ColumnName="expenseid" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="categoryid" ColumnName="categoryid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TotalExpenseLimits">
+            <EntityTypeMapping TypeName="ExpenseTrackerDBModel.TotalExpenseLimit">
+              <MappingFragment StoreEntitySet="TotalExpenseLimit">
+                <ScalarProperty Name="totalexpenseid" ColumnName="totalexpenseid" />
+                <ScalarProperty Name="totalexpenselimit1" ColumnName="totalexpenselimit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
