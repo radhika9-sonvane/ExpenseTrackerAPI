@@ -5,7 +5,7 @@ It is a Web Application bulit in ASP.Net MVC and API with Entity Framework.
 - Visual Studio 2022
 - SQL Server 2018
 
-## NuGet packages:
+## NuGet packages
 - Entity Framework
 - Microsoft.WebApi.Client
 - AlertifyJs
@@ -17,8 +17,6 @@ It is a Web Application bulit in ASP.Net MVC and API with Entity Framework.
 
 ## Installation
 - Clone the repository 
-- Copy code
-  "git clone 
 - Attach the database.mdf file in SQL SERVER
 - Open the solution file in Visual Studio 2022
 - Build the solution
