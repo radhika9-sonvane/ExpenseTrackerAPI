@@ -1,21 +1,21 @@
 # ExpenseTracker
 It is a Web Application bulit in ASP.Net MVC and API with Entity Framework.
 
-# Prerequisites
+## Prerequisites
 - Visual Studio 2022
 - SQL Server 2018
 
-# NuGet packages:
+## NuGet packages:
 - Entity Framework
 - Microsoft.WebApi.Client
 - AlertifyJs
 
-# Features
+## Features
 - Add, edit, and delete expense Details
 - Add, edit, and delete category
 - Add, edit TotalLimit
 
-# Installation
+## Installation
 - Clone the repository 
 - Copy code
   "git clone 
@@ -24,12 +24,12 @@ It is a Web Application bulit in ASP.Net MVC and API with Entity Framework.
 - Build the solution
 - Run the application
 
-# Usage
+## Usage
 - Add,Edit,Delete expenses details
 - Add,Edit,Delete categories
 - View expense Details, Category details and total expense on the dashboard
 
-# Screenshot
+## Screenshot
 
 - Dashboard
 <img width="924" alt="dashboard" src="https://user-images.githubusercontent.com/122665281/212464808-8bc2573a-c0c9-4274-b753-6e72775355a5.png">
